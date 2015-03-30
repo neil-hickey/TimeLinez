@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}
+  {% if request.endpoint == 'public_timeline' %}
+    Public Timeline
+  {% elif request.endpoint == 'user_timeline' %}
+    {{ profile_user.username }}'s Timeline
+  {% else %}
+    Groups
+  {% endif %}
+{% endblock %}
+{% block body %}
+  <h2>{{ self.title() }}</h2>
+  <ul class=messages>
+  {% for group in groups %}
+    <li><img src=""><p>
+      <strong>{{ group.name }}</strong>
+      <strong><small>&mdash; </small> <a href="{{ url_for('join_group', owner_id=group.owner_id)}}">Join Group</a></strong>
+      <strong><small>&mdash; </small> <a href="{{ url_for('leave_group', owner_id=group.owner_id)}}">Leave Group</a></strong>
+  {% else %}
+    <li><em>There's no other groups so far.</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

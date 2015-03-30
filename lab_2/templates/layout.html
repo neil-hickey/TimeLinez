@@ -1,0 +1,46 @@
+<!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <title>{% block title %}Welcome{% endblock %} | TimeLinez</title>
+      <link rel="shortcut icon" href="static/images/favicon.ico" type="image/x-icon" />
+      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+      <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+    </head>
+    <body>
+      <div class=page>
+        <h1>TimeLinez</h1>
+        <div class=navigation>
+        {% if g.user %}
+          <a href="{{ url_for('timeline') }}">my timeline</a> |
+          <a href="{{ url_for('groups') }}">groups</a> |
+          <a href="{{ url_for('public_timeline') }}">public timeline</a> |
+          <a href="{{ url_for('logout') }}">sign out [{{ g.user.username }}]</a>
+        {% else %}
+          <a href="{{ url_for('public_timeline') }}">public timeline</a> |
+          <a href="{{ url_for('register') }}">sign up</a> |
+          <a href="{{ url_for('login') }}">sign in</a> 
+        {% endif %}
+        </div>
+        {% with flashes = get_flashed_messages() %}
+          {% if flashes %}
+            <ul class=flashes>
+            {% for message in flashes %}
+              <li>{{ message }}
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        <div class=body>
+        {% block body %}{% endblock %}
+        </div>
+        <div class=footer>
+          TimeLinez &copy; Neil Hickey 2015
+        </div>
+      </div>
+    </body>
+  </html>
+
+
